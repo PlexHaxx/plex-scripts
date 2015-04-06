@@ -37,8 +37,7 @@ function download(enclosure) {
 }
 
 
-var response 
-    = rss.parseURL('https://yts.to/rss', function(articles) {
+var response = rss.parseURL('https://yts.to/rss', function(articles) {
 
     for(i=0; i<articles.length; i++) {
         var art = articles[i];
@@ -52,7 +51,7 @@ var response
         if (matches) {
             var num = 10 * parseInt(matches[1] | '0', 10) + parseInt(matches[2] | '0', 10); //parseFloat glitchy
 
-            if (num > minrt * 10 && art.description.match('\\s*Quality[^\d]*1080p')) { //rating > min, 1080p
+            if (num > minrt * 10 && art.description.match('[^\d]+1080p[^\d]+')) { //rating > min, 1080p
                 console.log(fnm);
                 fs.appendFileSync(logpath,  fnm + '\r\n');
                 
