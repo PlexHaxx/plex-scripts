@@ -37,7 +37,8 @@ function download(enclosure) {
 }
 
 
-var response = rss.parseURL('https://yts.to/rss', function(articles) {
+var response 
+    = rss.parseURL('https://yts.to/rss', function(articles) {
 
     for(i=0; i<articles.length; i++) {
         var art = articles[i];
