@@ -2,7 +2,7 @@
 
 
 var path = '/media/35a8/home/londonfire93/private/deluge/watch/';
-var minrt = 5.6
+var minrt = 5.2
 var logpath = 'log.txt';
 
 var rss = require('./node-rss');
