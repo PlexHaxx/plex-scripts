@@ -17,7 +17,7 @@ echo $$ > ${LOCKFILE}
 (cat /media/35a8/home/londonfire93/private/deluge/lists/tv.list; echo) | while IFS=',' read -r TVPATH TVFOLDER OUTPATH CREATION_PID
 do
 echo "$TVPATH $TVFOLDER $OUTPATH $CREATION_PID"
-    if [[ "$CREATION_PID === $CURRENT_PID" ]]; then
+    if [[ "$CREATION_PID" == "$CURRENT_PID" ]]; then
 	if [[ "$TVPATH/$TVFOLDER/" == *completed* ]]; then
 		echo "Processing $(date) $TVPATH/$TVFOLDER" >> ${LOGTO}
 		find "$TVPATH/$TVFOLDER" -name "*.rar" -exec 7z x "{}" -y -o"$TVPATH" \;
