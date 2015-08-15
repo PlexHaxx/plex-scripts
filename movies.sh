@@ -23,7 +23,7 @@ echo "$MOVIEPATH $MOVIEFOLDER $CREATION_PID"
 		echo "Processing $(date) $MOVIEPATH/$MOVIEFOLDER" >> ${MLOGTO}
 		#find "$MOVIEPATH/$MOVIEFOLDER" -name "*.rar" -exec 7z x "{}" -y -o"$MOVIEPATH" \;
 		mkdir -p  "${MOUTPATH}"
-		find "$MOVIEPATH" -type f \( -iname \*.mkv -o -iname \*.mp4 -o -iname \*.avi \) -exec mv "{}" "${MOUTPATH}" \;
+		find "$MOVIEPATH/$MOVIEFOLDER" -type f \( -iname \*.mkv -o -iname \*.mp4 -o -iname \*.avi \) -exec mv "{}" "${MOUTPATH}" \;
 		rm -rf "${MOVIEPATH:?}/${MOVIEFOLDER:?}"
 		echo "Done  $(date) $MOVIEPATH/$MOVIEFOLDER" >>  ${MLOGTO}
             fi

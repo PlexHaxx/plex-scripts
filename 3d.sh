@@ -14,7 +14,7 @@ trap "rm -f ${DLOCKFILE}; exit" INT TERM EXIT
 echo $$ > ${DLOCKFILE}
 
 # Process Files 
-(cat /media/35a8/home/londonfire93/private/deluge/lists/movie.list; echo) | while IFS=',' read -r DPATH DFOLDER
+(cat /media/35a8/home/londonfire93/private/deluge/lists/3d.list; echo) | while IFS=',' read -r DPATH DFOLDER
 do
 echo "$DPATH $DFOLDER"
 
