@@ -143,13 +143,19 @@ exports.parseURL = function(url, cb) {
     callback = cb;
 
     get_rss(url);
+    
     function get_rss(url) {
-    var u = require('url'), http = require('http');
+    var u = require('url');
     var parts = u.parse(url);
-    //console.log(JSON.stringify(parts));
-
+    var prot = parts.protocol.split(/:/)[0];
+    http = require(prot);
     // set the default port to 80
-    if(!parts.port) { parts.port = 80; }
+    if(!parts.port) { 
+    	if (prot == 'http')
+    		parts.port = 80; 
+    	else
+    		parts.port = 443; 
+    }
     
 
     var redirection_level = 0;
@@ -164,6 +170,11 @@ exports.parseURL = function(url, cb) {
         method: 'GET'
     };
 
+    if (parts.search) {
+    	options.path += parts.search;
+    }
+    
+    //console.log(JSON.stringify(options));
 
     //request.addListener('response', 
 

@@ -110,10 +110,11 @@ XMLP.prototype._addAttribute = function(name, value) {
 }
 
 XMLP.prototype._checkStructure = function(iEvent) {
-	if(XMLP._STATE_PROLOG == this.m_iState) {
-		if((XMLP._TEXT == iEvent) || (XMLP._ENTITY == iEvent)) {
+    if(XMLP._STATE_PROLOG == this.m_iState) {
+        if((XMLP._TEXT == iEvent) || (XMLP._ENTITY == iEvent)) {
+        	//console.log(this.getContent());
             if(SAXStrings.indexOfNonWhitespace(this.getContent(), this.getContentBegin(), this.getContentEnd()) != -1) {
-				return this._setErr(XMLP.ERR_DOC_STRUCTURE);
+                return this._setErr(XMLP.ERR_DOC_STRUCTURE);
             }
         }
 
@@ -140,13 +141,13 @@ XMLP.prototype._checkStructure = function(iEvent) {
         }
     }
     if(XMLP._STATE_MISC == this.m_iState) {
-		if((XMLP._ELM_B == iEvent) || (XMLP._ELM_E == iEvent) || (XMLP._ELM_EMP == iEvent) || (XMLP.EVT_DTD == iEvent)) {
-			return this._setErr(XMLP.ERR_DOC_STRUCTURE);
+        if((XMLP._ELM_B == iEvent) || (XMLP._ELM_E == iEvent) || (XMLP._ELM_EMP == iEvent) || (XMLP.EVT_DTD == iEvent)) {
+            return this._setErr(XMLP.ERR_DOC_STRUCTURE);
         }
 
         if((XMLP._TEXT == iEvent) || (XMLP._ENTITY == iEvent)) {
-			if(SAXStrings.indexOfNonWhitespace(this.getContent(), this.getContentBegin(), this.getContentEnd()) != -1) {
-				return this._setErr(XMLP.ERR_DOC_STRUCTURE);
+            if(SAXStrings.indexOfNonWhitespace(this.getContent(), this.getContentBegin(), this.getContentEnd()) != -1) {
+                return this._setErr(XMLP.ERR_DOC_STRUCTURE);
             }
         }
     }
@@ -330,9 +331,9 @@ XMLP.prototype._parseAttribute = function(iB, iE) {
     var iNB, iNE, iEq, iVB, iVE;
     var cQuote, strN, strV;
 
-	this.m_cAlt = ""; //resets the value so we don't use an old one by accident (see testAttribute7 in the test suite)
+    this.m_cAlt = ""; //resets the value so we don't use an old one by accident (see testAttribute7 in the test suite)
 
-	iNB = SAXStrings.indexOfNonWhitespace(this.m_xml, iB, iE);
+    iNB = SAXStrings.indexOfNonWhitespace(this.m_xml, iB, iE);
     if((iNB == -1) ||(iNB >= iE)) {
         return iNB;
     }
@@ -372,7 +373,7 @@ XMLP.prototype._parseAttribute = function(iB, iE) {
 
     strV = SAXStrings.replace(strV, null, null, "\n", " ");
     strV = SAXStrings.replace(strV, null, null, "\t", " ");
-	iRet = this._replaceEntities(strV);
+    iRet = this._replaceEntities(strV);
     if(iRet == XMLP._ERROR) {
         return iRet;
     }
@@ -468,7 +469,7 @@ XMLP.prototype._parseDTD = function(iB) {
 }
 
 XMLP.prototype._parseElement = function(iB) {
-    sys = require('sys');
+    sys = require('util');
     var iE, iDE, iNE, iRet;
     var iType, strN, iLast;
 
@@ -796,7 +797,7 @@ SaxParser.prototype.parseFile = function(filename) { //This function will only w
 
 
 SaxParser.prototype.parseString = function(strD) {
-    sys = require('sys');
+    sys = require('util');
     var that = this;
 
     setTimeout(function(){
