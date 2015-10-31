@@ -1,12 +1,15 @@
 //#! /media/35a8/home/londonfire93/bin/node
 
 
-var path = '/media/35a8/home/londonfire93/private/deluge/watch/';
-var minrt = 5.2
-var logpath = '/media/35a8/home/londonfire93/private/deluge/Scripts/movie_log.txt';
+//var path = '/media/35a8/home/londonfire93/private/deluge/watch/';
+var minrt = 5.2;
+var minsz = 0.8;
+var maxsz = 4.5;
+//var logpath = '/media/35a8/home/londonfire93/private/deluge/Scripts/movie_log.txt';
 
-//var path = 'watch/'
-//var logpath = 'movie_log.txt';
+
+var path = 'watch/'
+var logpath = 'movie_log.txt';
 var rssurl = 'https://rarbg.to/torrents.php?search=&category%5B%5D=44';
 
 var fs = require('fs');
@@ -43,19 +46,24 @@ function scheduleArray(a) {
 
 function parseString(str) {
 	var resl;
-	var re = /class="lista">(.*?)<\/td>/g;
+	var re = /class="lista2">(.*?)<\/tr>/g;
 	var res = [];
 	
 	while ((resl = re.exec(str)) !== null) {
 		var m = resl[0].match(/href="(\/torrent\/[^"]+?)"/)
 		if (m && m[1].indexOf('#') < 0) {
-			var m1 = resl[0].match(/IMDB: (\d+).(\d+)\/10/i);
+			var m1 = resl[0].match(/IMDB: (\d+.\d+)\/10/i);
 			if (m1) {
-				var rt = parseInt(m1[1] | '0', 10) + parseInt(m1[2] | '0', 10) / 10;
+				var rt = parseFloat(m1[1]);
 				if (rt > minrt) {
-					
-					res.push('https://rarbg.to' + m[1]);
-					
+					m1 = resl[0].match(/class="lista">(\d+.\d+)\s*GB<\/td>/i);
+					if (m1) {
+						var rs = parseFloat(m1[1]);
+						if (rs > minsz && rs < maxsz) {
+							console.log("Rating: " + rt + " Size: " + rs + "GB");
+							res.push('https://rarbg.to' + m[1]);
+						}
+					}
 				}
 			}
 		}
@@ -136,6 +144,10 @@ function getData(url, cb) {
 
 function download(url) {
     var f = url.match(/=([^=]+\.torrent)/)[1];
+    
+	if (log.indexOf(f) >= 0) 
+    	return;
+
     var fname = path + f;
     
     console.log(f);
