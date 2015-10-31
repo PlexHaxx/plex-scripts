@@ -1,15 +1,15 @@
-//#! /media/35a8/home/londonfire93/bin/node
+#! /media/35a8/home/londonfire93/bin/node
 
 
-//var path = '/media/35a8/home/londonfire93/private/deluge/watch/';
+var path = '/media/35a8/home/londonfire93/private/deluge/watch/';
 var minrt = 5.2;
 var minsz = 0.8;
 var maxsz = 4.5;
-//var logpath = '/media/35a8/home/londonfire93/private/deluge/Scripts/movie_log.txt';
+var logpath = '/media/35a8/home/londonfire93/private/deluge/Scripts/movie_log.txt';
 
 
-var path = 'watch/'
-var logpath = 'movie_log.txt';
+//var path = 'watch/'
+//var logpath = 'movie_log.txt';
 var rssurl = 'https://rarbg.to/torrents.php?search=&category%5B%5D=44';
 
 var fs = require('fs');
