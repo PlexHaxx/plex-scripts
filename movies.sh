@@ -21,6 +21,7 @@ echo "$MOVIEPATH $MOVIEFOLDER $CREATION_PID"
 	if [[ "$CREATION_PID" == "$CURRENT_PID" ]]; then
 	    if [[ "$MOVIEPATH/$MOVIEFOLDER/" == *Movies_Temp* ]]; then
 		echo "Processing $(date) $MOVIEPATH/$MOVIEFOLDER" >> ${MLOGTO}
+		find . -type f -size -50M -exec rm "{}" \;
 		#find "$MOVIEPATH/$MOVIEFOLDER" -name "*.rar" -exec 7z x "{}" -y -o"$MOVIEPATH" \;
 		mkdir -p  "${MOUTPATH}"
 		find "$MOVIEPATH/$MOVIEFOLDER" -type f \( -iname \*.mkv -o -iname \*.mp4 -o -iname \*.avi \) -exec mv "{}" "${MOUTPATH}" \;
