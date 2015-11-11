@@ -67,9 +67,9 @@ var response = rss.parseURL(rssurl, function(articles) {
         if (!rmatch && !fmatch)
         	continue;
         
-        var rmatch = art.description.match(/\s*(rating|imdb)[\s.:-]+(\d+)\.(\d+)([\s\/|]|$)/i);
+        var rmatch = art.description.match(/\s*(rating|imdb)[\s.:-]+(\d+\.\d+)([\s\/|]|$)/i);
 		
-		if (!rmatch || parseInt(rmatch[2] | '0', 10) + parseInt(rmatch[3] | '0', 10) / 10 < minrt)
+		if (!rmatch || parseFloat(rmatch[2]) < minrt)
 			continue;
         
         
