@@ -22,8 +22,7 @@ echo "$TVPATH $TVFOLDER $OUTPATH $CREATION_PID $OUTPATH2"
 		echo "Processing $(date) $TVPATH/$TVFOLDER" >> ${LOGTO}
 		find "$TVPATH/$TVFOLDER" -name "*.rar" -exec 7z x "{}" -y -o"$TVPATH" \;
 		mkdir -p  "${OUTPATH}"
-		find "$TVPATH" -type f \( -iname \*.mkv -o -iname \*.mp4 -o -iname \*.avi \) -exec cp "{}" "${OUTPATH}" \;
-		find "$TVPATH" -type f \( -iname \*.mkv -o -iname \*.mp4 -o -iname \*.avi \) -exec cp "{}" "${OUTPATH2}" \;
+		find "$TVPATH" -type f \( -iname \*.mkv -o -iname \*.mp4 -o -iname \*.avi \) -exec cp "{}" "${OUTPATH}" \; -a cp "{}" "${OUTPATH2}" \;
 		rm -rf "${TVPATH:?}/${TVFOLDER:?}"
 		echo "Done  $(date) $TVPATH/$TVFOLDER" >>  ${LOGTO}
 	fi
