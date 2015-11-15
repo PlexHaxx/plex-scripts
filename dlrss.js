@@ -3,9 +3,9 @@
 
 var path = '/media/35a8/home/londonfire93/private/deluge/watch/';
 var minrt = 5.2
-var logpath = '/media/35a8/home/londonfire93/private/deluge/Scripts/movie_log.txt';
+var logpath = '/media/35a8/home/londonfire93/private/deluge/Scripts/movie_yts_log.txt';
 
-var rss = require('./node-rss');
+var rss = require('./node-rss-yts');
 var fs = require('fs');
 var http = require('http');
 
@@ -37,7 +37,7 @@ function download(enclosure) {
 }
 
 
-var response = rss.parseURL('https://yts.to/rss', function(articles) {
+var response = rss.parseURL('https://yts.ag/rss', function(articles) {
 
     for(i=0; i<articles.length; i++) {
         var art = articles[i];
@@ -61,3 +61,4 @@ var response = rss.parseURL('https://yts.to/rss', function(articles) {
     }
 
 });
+
