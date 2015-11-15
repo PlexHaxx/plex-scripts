@@ -3,7 +3,8 @@ PID=$(< /media/35a8/home/londonfire93/.config/deluge/deluged.pid|sha1sum|cut -c 
 
 if [[ "$3/$2/" == *completed* ]]; then
 OUTPATH=/media/35a8/home/londonfire93/private/deluge/sorted/$(basename "$3")
-echo "$3,$2,$OUTPATH,$PID" >> /media/35a8/home/londonfire93/private/deluge/lists/tv.list
+OUTPATH2=/media/35a8/home/londonfire93/private/deluge/aws_tv/$(basename "$3")
+echo "$3,$2,$OUTPATH,$PID,$OUTPATH2" >> /media/35a8/home/londonfire93/private/deluge/lists/tv.list
 
 fi
 
