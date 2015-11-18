@@ -25,6 +25,7 @@ echo "$TVPATH $TVFOLDER $OUTPATH $CREATION_PID $OUTPATH2"
 		mkdir -p  "${OUTPATH2}"
 		find "$TVPATH" -type f \( -iname \*.mkv -o -iname \*.mp4 -o -iname \*.avi \) -exec cp "{}" "${OUTPATH}" \;
 		find "$TVPATH" -type f \( -iname \*.mkv -o -iname \*.mp4 -o -iname \*.avi \) -exec cp "{}" "${OUTPATH2}" \;
+		find "$TVPATH" -type f \( -iname \*.mkv -o -iname \*.mp4 -o -iname \*.avi \) -exec rm -rf "{}" \;
 		rm -rf "${TVPATH:?}/${TVFOLDER:?}"
 		echo "Done  $(date) $TVPATH/$TVFOLDER" >>  ${LOGTO}
 	fi
