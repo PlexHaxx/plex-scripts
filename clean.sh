@@ -1,5 +1,6 @@
 #!/bin/bash
-killall -9 -u londonfire93 deluged deluge-web
+PID=$(cat /media/35a8/home/londonfire93/.config/deluge/deluged.pid |awk -F ';' '{print $1}')
+kill -9 $PID
 sleep 10
 rm -rf /media/35a8/home/londonfire93/private/deluge/Scripts/logs/*
 rm -rf /media/35a8/home/londonfire93/private/deluge/completed/*
