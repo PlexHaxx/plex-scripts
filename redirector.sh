@@ -1,5 +1,5 @@
 #!/bin/bash
-PID=$(< /media/35a8/home/londonfire93/.config/deluge/deluged.pid|sha1sum|cut -c 1-10)
+PID=$(cat /media/35a8/home/londonfire93/.config/deluge/deluged.pid|sha1sum|cut -c 1-10)
 
 if [[ "$3/$2/" == *completed* ]]; then
 OUTPATH=/media/35a8/home/londonfire93/private/deluge/sorted/$(basename "$3")
