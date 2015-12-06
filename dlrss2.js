@@ -12,7 +12,8 @@ var logpath = '/media/35a8/home/londonfire93/private/deluge/Scripts/movie_log.tx
 //var logpath = 'movie_log.txt';
 var tokenurl = 'https://torrentapi.org/pubapi_v2.php?get_token=get_token';
 var movieurl = 'https://torrentapi.org/pubapi_v2.php?mode=search&format=json_extended&category=movies&token='
-
+var torurl = 'http://itorrents.org/torrent/'
+	
 var path = require('path');
 var fs = require('fs');
 var u = require('url');
@@ -96,7 +97,7 @@ function getData(url, cb) {
 
 
 
-function download(url, fname) {
+function downloadData(url, fname) {
     var u = require('url');
 
     var parts = u.parse(url);
@@ -144,9 +145,17 @@ function download(url, fname) {
 function dumpMagnetFile(filename, content) {
 	if (log.indexOf(filename) >= 0) 
     	return;
-
-	fs.writeFileSync(filepath + filename, content);
-	fs.appendFileSync(logpath,  filename + '\r\n');
+    
+    if (path.extname(filename) == '.magnet') {
+		fs.writeFileSync(filepath + filename, content);
+		fs.appendFileSync(logpath,  filename + '\r\n');
+	} else {
+		var mt = content.match('urn:btih:(.+?)([&]|$)');
+		
+		if (mt) {
+			downloadData(torurl + mt[1] + '.torrent', filepath + filename);
+		}
+	}
 }
 
 function dumpMagnetData(data) {
@@ -156,7 +165,7 @@ function dumpMagnetData(data) {
 	for(var i=0;i<resl.length;i++) {
 		var size = resl[i].size / 1024 / 1024 / 1024; 
 		if (resl[i].title.match('[^\d]+1080p[^\d]+') && size >= minsz && size <= maxsz) {
-			dumpMagnetFile(resl[i].title + '.magnet', resl[i].download);
+			dumpMagnetFile(resl[i].title + '.torrent', resl[i].download);
 		}
 	}
 }
