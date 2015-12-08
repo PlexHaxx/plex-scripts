@@ -2,17 +2,18 @@
 
 
 var filepath = '/media/35a8/home/londonfire93/private/deluge/watch/';
-var minrt = 5.2;
-var minsz = 0.8;
-var maxsz = 4.5;
+var minrt = 5.2;//IMDB POINTS
+var minsz = 0.8;//GIGABYTES !
+var maxsz = 5.5;//GIGABYTES !
 var logpath = '/media/35a8/home/londonfire93/private/deluge/Scripts/movie_log.txt';
 
 
-//var filepath = 'watch/'
-//var logpath = 'movie_log.txt';
+//filepath = 'watch/'
+//logpath = 'movie_log.txt';
 var tokenurl = 'https://torrentapi.org/pubapi_v2.php?get_token=get_token';
 var movieurl = 'https://torrentapi.org/pubapi_v2.php?mode=search&format=json_extended&category=movies&token='
 var torurl = 'http://itorrents.org/torrent/'
+var omdbapi = 'http://www.omdbapi.com/?plot=short&r=json&i='
 	
 var path = require('path');
 var fs = require('fs');
@@ -158,16 +159,39 @@ function dumpMagnetFile(filename, content) {
 	}
 }
 
+function scheduleArray(a){
+	if (a.length == 0)
+    	return;
+    
+    var nm = a.pop();
+    
+	if (nm.episode_info && nm.episode_info.imdb) {
+		getData(omdbapi + nm.episode_info.imdb, function(xdata) {
+			if (xdata.imdbRating && parseFloat(xdata.imdbRating) > minrt) {
+				dumpMagnetFile(nm.title + '.torrent', nm.download);
+			}
+		});
+	}
+    
+    
+    setTimeout(function() { scheduleArray(a); }, 50);
+}
+
 function dumpMagnetData(data) {
-	console.log(data.torrent_results);
 	var resl = data.torrent_results;
+	
+	var resx = [];
 	
 	for(var i=0;i<resl.length;i++) {
 		var size = resl[i].size / 1024 / 1024 / 1024; 
 		if (resl[i].title.match('[^\d]+1080p[^\d]+') && size >= minsz && size <= maxsz) {
-			dumpMagnetFile(resl[i].title + '.torrent', resl[i].download);
+			//dumpMagnetFile(resl[i].title + '.torrent', resl[i].download);
+			resx.push(resl[i]);
 		}
 	}
+	
+	
+	scheduleArray(resx);
 }
 
 
