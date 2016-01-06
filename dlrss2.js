@@ -12,7 +12,7 @@ var logpath = '/media/35a8/home/londonfire93/private/deluge/Scripts/movie_log.tx
 //logpath = 'movie_log.txt';
 var tokenurl = 'https://torrentapi.org/pubapi_v2.php?get_token=get_token';
 var movieurl = 'https://torrentapi.org/pubapi_v2.php?mode=search&format=json_extended&category=movies&token='
-var torurl = 'http://itorrents.org/torrent/'
+var torurl = 'http://torcache.net/torrent/{0}.torrent'
 var omdbapi = 'http://www.omdbapi.com/?plot=short&r=json&i='
 	
 var path = require('path');
@@ -154,7 +154,7 @@ function dumpMagnetFile(filename, content) {
 		var mt = content.match('urn:btih:(.+?)([&]|$)');
 		
 		if (mt) {
-			downloadData(torurl + mt[1] + '.torrent', filepath + filename);
+			downloadData(torurl.replace(/\{0\}/, mt[1].toUpperCase()) , filepath + filename);
 		}
 	}
 }
